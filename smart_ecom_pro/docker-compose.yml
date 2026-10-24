@@ -1,0 +1,14 @@
+services:
+  web:
+    build: .
+    ports: ["8000:8000"]
+    environment:
+      SECRET_KEY: "change-this-long-random-string"
+      ECOM_DB: /data/shop.db
+      RAZORPAY_KEY_ID: ${RAZORPAY_KEY_ID:-}
+      RAZORPAY_KEY_SECRET: ${RAZORPAY_KEY_SECRET:-}
+      BRAVE_API_KEY: ${BRAVE_API_KEY:-}
+    volumes:
+      - ./docker-data:/data      # database survives restarts
+      - ./models:/app/models     # models trained with train.py
+    restart: unless-stopped
